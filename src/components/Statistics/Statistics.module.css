@@ -1,0 +1,39 @@
+.statsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 10px;
+}
+
+.statItem {
+    font-size: 18px;
+}
+
+.goodValue {
+    color: green;
+    font-weight: bold;
+}
+
+.neutralValue {
+    color: orange;
+    font-weight: bold;
+}
+
+.badValue {
+    color: red;
+    font-weight: bold;
+}
+
+.statItemTotal {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 5px;
+}
+
+.statItemPercentage {
+    font-size: 22px;
+    font-weight: 700;
+    color: #007bff;
+}

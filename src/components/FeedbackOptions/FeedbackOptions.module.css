@@ -1,0 +1,38 @@
+.optionsWrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.button {
+    padding: 12px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    transition: all 0.2s ease-in-out;
+    font-weight: 600;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.good {
+    background-color: #4caf50;
+    /* Зелений */
+    color: white;
+}
+
+.neutral {
+    background-color: #ff9800;
+    /* Помаранчевий */
+    color: white;
+}
+
+.bad {
+    background-color: #f44336;
+    /* Червоний */
+    color: white;
+}
