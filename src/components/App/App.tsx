@@ -1,74 +1,58 @@
 import { useState } from 'react';
 import styles from './App.module.css';
-import { type FeedbackState, type FeedbackKey } from '../../types/votes';
-import Section from '../Section/Section';
-import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
-import Statistics from '../Statistics/Statistics';
+import { type Votes, type VoteType } from '../../types/votes';
+import CafeInfo from '../CafeInfo/CafeInfo.tsx'; 
+import VoteOptions from '../VoteOptions/VoteOptions.tsx';
+import VoteStats from '../VoteStats/VoteStats.tsx';
+import Notification from '../Notification/Notification.tsx';
 
-const initialFeedbackState: FeedbackState = {
+const initialVotes: Votes = {
   good: 0,
   neutral: 0,
   bad: 0,
 };
 
 const App = () => {
- 
-  const [feedback, setFeedback] = useState<FeedbackState>(initialFeedbackState);
+  const [votes, setVotes] = useState<Votes>(initialVotes);
+  
+  // Обчислення
+  const totalVotes = votes.good + votes.neutral + votes.bad;
+  const positiveRate = totalVotes
+    ? Math.round((votes.good / totalVotes) * 100)
+    : 0;
 
-
-  const handleLeaveFeedback = (key: FeedbackKey) => {
-   
-    setFeedback(prevFeedback => ({
-      ...prevFeedback,
-      [key]: prevFeedback[key] + 1,
+  // Обробники
+  const handleVote = (type: VoteType) => {
+    setVotes(prevVotes => ({
+      ...prevVotes,
+      [type]: prevVotes[type] + 1,
     }));
   };
 
-  const { good, neutral, bad } = feedback;
-
-
-  const countTotalFeedback = (): number => {
-    return good + neutral + bad;
+  const resetVotes = () => {
+    setVotes(initialVotes);
   };
-
-
-  const countPositiveFeedbackPercentage = (): number => {
-    const total = countTotalFeedback();
-
-    return total > 0 ? Math.round((good / total) * 100) : 0;
-  };
-
-  const total = countTotalFeedback();
-  const positivePercentage = countPositiveFeedbackPercentage();
   
-  // Динамічний масив ключів: ['good', 'neutral', 'bad']
-  const options: FeedbackKey[] = Object.keys(feedback) as FeedbackKey[];
+  const canReset = totalVotes > 0;
 
   return (
-    <div className={styles.container}>
+    <div className={styles.app}>
+      <CafeInfo />
+      <VoteOptions 
+        onVote={handleVote} 
+        onReset={resetVotes} 
+        canReset={canReset}
+      />
       
-      <Section title="Будь ласка, залиште свій відгук">
-        <FeedbackOptions 
-          options={options} 
-          onLeaveFeedback={handleLeaveFeedback} 
+      {totalVotes > 0 ? (
+        <VoteStats 
+          votes={votes} 
+          totalVotes={totalVotes} 
+          positiveRate={positiveRate} 
         />
-      </Section>
-
-      <Section title="Статистика">
-        {total === 0 ? (
-
-          <p className={styles.notification}>Ще немає відгуків</p>
-        ) : (
-          
-          <Statistics 
-            good={good} 
-            neutral={neutral} 
-            bad={bad} 
-            total={total} 
-            positivePercentage={positivePercentage} 
-          />
-        )}
-      </Section>
+      ) : (
+        <Notification />
+      )}
     </div>
   );
 };

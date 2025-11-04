@@ -1,11 +1,11 @@
 
-import styles from './FeedbackOptions.module.css'; 
+
+import styles from './VoteOptions.module.css'; 
 import { type VoteType } from '../../types/votes'; 
 
 
 interface VoteOptionsProps {
-  
-  onVote: (type: VoteType) => void; 
+  onVote: (type: VoteType) => void;
   onReset: () => void;
   canReset: boolean;
 }
@@ -37,4 +37,4 @@ const VoteOptions = ({ onVote, onReset, canReset }: VoteOptionsProps) => {
   );
 };
 
-export default VoteOptions; 
+export default VoteOptions;
