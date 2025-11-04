@@ -1,15 +1,17 @@
-import { ReactNode } from 'react';
+
+import React from 'react'; 
 import styles from './Section.module.css';
 
 interface SectionProps {
   title: string;
-  children: ReactNode; 
+  children: React.ReactNode; 
 }
 
 const Section = ({ title, children }: SectionProps) => {
   return (
     <section className={styles.section}>
-      <h2 className={styles.title}>{title}</h2>
+      {}
+      <h2 className={styles.title}>{title}</h2> 
       {children}
     </section>
   );
