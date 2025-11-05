@@ -5,6 +5,7 @@ import CafeInfo from '../CafeInfo/CafeInfo.tsx';
 import VoteOptions from '../VoteOptions/VoteOptions.tsx';
 import VoteStats from '../VoteStats/VoteStats.tsx';
 import Notification from '../Notification/Notification.tsx';
+import Section from '../Section/Section.tsx'; 
 
 
 const initialVotes: Votes = {
@@ -16,13 +17,13 @@ const initialVotes: Votes = {
 const App = () => {
   const [votes, setVotes] = useState<Votes>(initialVotes);
   
-  // Обчислення
+
   const totalVotes = votes.good + votes.neutral + votes.bad;
   const positiveRate = totalVotes
     ? Math.round((votes.good / totalVotes) * 100)
     : 0;
 
-  // Обробники
+
   const handleVote = (type: VoteType) => {
     setVotes(prevVotes => ({
       ...prevVotes,
@@ -38,22 +39,28 @@ const App = () => {
 
   return (
     <div className={styles.app}>
-      <CafeInfo />
+      
+      <CafeInfo /> 
+
       <VoteOptions 
         onVote={handleVote} 
         onReset={resetVotes} 
         canReset={canReset}
       />
       
-      {totalVotes > 0 ? (
-        <VoteStats 
-          votes={votes} 
-          totalVotes={totalVotes} 
-          positiveRate={positiveRate} 
-        />
-      ) : (
-        <Notification />
-      )}
+      <Section title={totalVotes > 0 ? "Statistics" : ""}> 
+        {totalVotes > 0 ? (
+          
+          <VoteStats 
+            votes={votes} 
+            totalVotes={totalVotes} 
+            positiveRate={positiveRate} 
+          />
+        ) : (
+          
+          <Notification /> 
+        )}
+      </Section>
     </div>
   );
 };
